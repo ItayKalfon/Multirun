@@ -4,8 +4,7 @@
 #include <string>
 #include <iostream>
 
-#include "VariableHandler.h"
-#include "AssignmentOperator.h"
+#include "ExpressionHandler.h"
 #include "InvalidCommand.h"
 
 enum class Command

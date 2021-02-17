@@ -37,24 +37,51 @@ void Value::setValue(const std::string& data)
     }
 }
 
-void Value::getValue(void* result) const
+void Value::getValue(int& result) const
 {
-    switch (this->_type)
+    if (this->_type == ValueType::INTEGER)
     {
-    case ValueType::BOOLEAN:
-        *(static_cast<bool*>(result)) = this->_booleanVal;
-        break;
-    case ValueType::FLOAT:
-        *(static_cast<float*>(result)) = this->_booleanVal;
-        break;
-    case ValueType::INTEGER:
-        *(static_cast<int*>(result)) = this->_booleanVal;
-        break;
-    case ValueType::STRING:
-        *(static_cast<std::string*>(result)) = this->_booleanVal;
-        break;
-    default:
-        break;
+        result = this->_intVal;
+    }
+    else
+    {
+        throw InvalidCast();
+    }
+}
+
+void Value::getValue(bool& result) const
+{
+    if (this->_type == ValueType::BOOLEAN)
+    {
+        result = this->_booleanVal;
+    }
+    else
+    {
+        throw InvalidCast();
+    }
+}
+
+void Value::getValue(float& result) const
+{
+    if (this->_type == ValueType::FLOAT)
+    {
+        result = this->_floatVal;
+    }
+    else
+    {
+        throw InvalidCast();
+    }
+}
+
+void Value::getValue(std::string& result) const
+{
+    if (this->_type == ValueType::STRING)
+    {
+        result = this->_stringVal;
+    }
+    else
+    {
+        throw InvalidCast();
     }
 }
 
@@ -99,6 +126,11 @@ ValueType Value::getDataType(const std::string& data)
     }
 }
 
+bool Value::isValue(const std::string& data)
+{
+    return getDataType(data) != ValueType::NONE || data == "none";
+}
+
 std::string Value::toString() const
 {
     switch (this->_type)
@@ -113,5 +145,69 @@ std::string Value::toString() const
         return '\'' + this->_stringVal + '\'';
     default:
         return "none";
+    }
+}
+
+void Value::castTo(const ValueType& type)
+{
+    switch (this->_type)
+    {
+    case ValueType::BOOLEAN:
+        switch (type)
+        {
+        case ValueType::FLOAT:
+            this->setValue(this->_booleanVal ? "1.0" : "0.0");
+            break;
+        case ValueType::INTEGER:
+            this->setValue(this->_booleanVal ? "1" : "0");
+            break;
+        case ValueType::STRING:
+            this->setValue("'" + this->toString() + "'");
+            break;
+        case ValueType::NONE:
+            this->setValue("");
+            break;
+        }
+        break;
+    case ValueType::FLOAT:
+        switch (type)
+        {
+        case ValueType::BOOLEAN:
+            this->setValue(this->_floatVal != 0.0f ? "true" : "false");
+            break;
+        case ValueType::INTEGER:
+            this->setValue(std::to_string(static_cast<int>(this->_floatVal)));
+            break;
+        case ValueType::STRING:
+            this->setValue("'" + this->toString() + "'");
+            break;
+        case ValueType::NONE:
+            this->setValue("");
+            break;
+        }
+        break;
+    case ValueType::INTEGER:
+        switch (type)
+        {
+        case ValueType::BOOLEAN:
+            this->setValue(this->_intVal != 0 ? "true" : "false");
+            break;
+        case ValueType::FLOAT:
+            this->setValue(std::to_string(static_cast<float>(this->_intVal)));
+            break;
+        case ValueType::STRING:
+            this->setValue("'" + this->toString() + "'");
+            break;
+        case ValueType::NONE:
+            this->setValue("");
+            break;
+        }
+        break;
+    case ValueType::STRING:
+        if (type != ValueType::STRING)
+        {
+            this->setValue(this->toString());
+        }
+        break;
     }
 }

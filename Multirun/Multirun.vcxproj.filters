@@ -66,6 +66,9 @@
     <ClCompile Include="Operator.cpp">
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
+    <ClCompile Include="PlusOperator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InvalidCommand.h">
@@ -103,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="OperatorHandler.h">
       <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlusOperator.h">
+      <Filter>Header Files\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="InvalidCast.h">
+      <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

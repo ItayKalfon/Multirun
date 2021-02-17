@@ -2,7 +2,13 @@
 
 void CommandHandler::handleCommand(const std::vector<std::string>& args)
 {
-	AssignmentOperator op = AssignmentOperator();
+	//AssignmentOperator op = AssignmentOperator();
+	Value res = ExpressionHandler::compute(args);
+	if (res.getType() != ValueType::NONE)
+	{
+		std::cout << res.toString() << std::endl;
+	}
+	/*
 	switch (CommandHandler::getCommandType(args))
 	{
 	case Command::ASSIGN:
@@ -16,6 +22,7 @@ void CommandHandler::handleCommand(const std::vector<std::string>& args)
 	default:
 		return;
 	}
+	*/
 }
 
 Command CommandHandler::getCommandType(const std::vector<std::string>& args)

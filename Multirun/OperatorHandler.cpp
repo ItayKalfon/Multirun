@@ -1,8 +1,11 @@
 #include "OperatorHandler.h"
 
 const std::vector<std::shared_ptr<Operator>> OperatorHandler::_operators = [] {
-	std::vector<std::shared_ptr<Operator>> operators = std::vector<std::shared_ptr<Operator>> { std::make_shared<AssignmentOperator>() };
-	std::sort(operators.begin(), operators.end(), [](std::shared_ptr<Operator> first, std::shared_ptr<Operator> second) { return first->getPriority() > second->getPriority(); }); // Sort by priority
+	std::vector<std::shared_ptr<Operator>> operators = std::vector<std::shared_ptr<Operator>> {
+		static_cast<std::shared_ptr<Operator>>(std::make_shared<AssignmentOperator>()),
+		static_cast<std::shared_ptr<Operator>>(std::make_shared<PlusOperator>())
+	};
+	std::sort(operators.begin(), operators.end(), [] (std::shared_ptr<Operator> first, std::shared_ptr<Operator> second) { return first->getPriority() > second->getPriority(); }); // Sort by priority
 	return operators;
 } ();
 
@@ -13,12 +16,17 @@ bool OperatorHandler::isOperator(const std::string& symbol)
 
 std::shared_ptr<Operator> OperatorHandler::getOperator(const std::string& symbol)
 {
-	for (auto op = OperatorHandler::_operators.begin(); op < OperatorHandler::_operators.end(); op++)
+	for (auto op : OperatorHandler::_operators)
 	{
-		if ((*op)->getSymbol() == symbol)
+		if (op->getSymbol() == symbol)
 		{
-			return *op;
+			return op;
 		}
 	}
 	return nullptr;
+}
+
+std::vector<std::shared_ptr<Operator>> OperatorHandler::getOperators()
+{
+	return OperatorHandler::_operators;
 }

@@ -2,7 +2,7 @@
 
 ExpressionType ExpressionHandler::getType(const std::string& data)
 {
-    if (Value::getDataType(data) != ValueType::NONE)
+    if (Value::isValue(data))
     {
         return ExpressionType::VALUE;
     }
@@ -20,22 +20,55 @@ ExpressionType ExpressionHandler::getType(const std::string& data)
     }
 }
 
-Value ExpressionHandler::compute(const std::vector<std::string>& args)
+Value ExpressionHandler::compute(std::vector<std::string> args)
 {
-    for (int i = 0; i < args.size(); i++)
+    std::string res = executeOperators(args);
+    switch (getType(res))
     {
-        if (ExpressionHandler::getType(args[i]) == ExpressionType::VALUE)
-        {
-            return Value(args[i]);
-        }
-        else if (ExpressionHandler::getType(args[i]) == ExpressionType::VARIABLE)
-        {
-            return VariableHandler::getVariable(args[i]).getValue();
-        }
-        else if (ExpressionHandler::getType(args[i]) == ExpressionType::OPERATOR)
-        {
-            // TODO: Add operator handling
-        }
+    case ExpressionType::VALUE:
+        return Value(res);
+    case ExpressionType::VARIABLE:
+        return VariableHandler::getVariable(res).getValue();
+    default:
+        return Value();
     }
-    return Value();
+}
+
+std::string ExpressionHandler::executeOperators(std::vector<std::string> args)
+{
+    std::vector<std::string>::iterator place;
+    bool isNotFound;
+    for (std::shared_ptr<Operator> op : OperatorHandler::getOperators())
+    {
+        do
+        {
+            place = std::find(args.begin(), args.end(), op->getSymbol());
+            if (isNotFound = place != args.end())
+            {
+                switch (op->getShape())
+                {
+                case Shape::BOTH:
+                    if (place != args.begin() && place != args.end() - 1)
+                    {
+                        *place = op->execute(*(place - 1), *(place + 1)).toString();
+                        place -= 1;
+                        args.erase(place + 2);
+                        args.erase(place);
+                    }
+                    else
+                    {
+                        throw InvalidArgument();
+                    }
+                    break;
+                default:
+                    break;
+                }
+            }
+        } while (isNotFound);
+    }
+    if (args.size() != 1)
+    {
+        throw InvalidArgument();
+    }
+    return args[0];
 }

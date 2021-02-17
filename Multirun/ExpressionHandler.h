@@ -11,5 +11,8 @@ class ExpressionHandler
 {
 public:
 	static ExpressionType getType(const std::string& data);
-	static Value compute(const std::vector<std::string>& args);
+	static Value compute(std::vector<std::string> args);
+
+private:
+	static std::string executeOperators(std::vector<std::string> args);
 };

@@ -4,6 +4,7 @@ AssignmentOperator::AssignmentOperator()
 {
 	this->_symbol = "=";
 	this->_priority = Priority::LOW;
+	this->_shape = Shape::BOTH;
 }
 
 Value AssignmentOperator::execute(const std::string& left, const std::string& right) const
