@@ -1,44 +1,45 @@
 #include "Utilities.h"
 
-std::vector<std::string> Utilities::spilt(const std::string& data)
+std::vector<std::string> Utilities::spilt(const std::string& data, const std::string& sep, bool isDelim)
 {
-    // Split data using spaces
-    std::istringstream iss(data);
-    std::vector<std::string> tokens{ std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>{} };
-    int startIndex = 0;
-    char delim = NULL;
-
-    // Unite split strings which had spaces
-    for (int i = 0; i < tokens.size() && (data.find('\'') != std::string::npos || data.find('\"') != std::string::npos); i++)
+    std::vector<std::string> tokens;
+    std::string token = "";
+    char delim = 0;
+    for (int i = 0; i < data.size(); i++)
     {
-        if (startIndex == 0 && (tokens[i].front() == '"' || tokens[i].front() == '\''))
+        if (delim == 0 && data.size() - i > sep.size() && data.substr(i, sep.size()) == sep)
         {
-            startIndex = i;
-            delim = tokens[i].front();
+            if (token != "")
+            {
+                tokens.push_back(token);
+                token = "";
+            }
+            i += sep.size() - 1;
         }
-        
-        if (startIndex != 0 && tokens[i].back() == delim)
+        else
         {
-            if (startIndex != i)
+            if (isDelim && delim == 0 && (data[i] == '\'' || data[i] == '"'))
             {
-                for (auto token = tokens.begin() + startIndex + 1; token <= tokens.begin() + i; token++)
-                {
-                    tokens[startIndex] += " " + *token;
-                }
-                tokens.erase(tokens.begin() + startIndex + 1, tokens.begin() + i + 1);
-                i = startIndex + 1;
-                startIndex = 0;
+                delim = data[i];
             }
-            else
+            else if (isDelim && delim != 0 && data[i] == delim)
             {
-                startIndex = 0;
+                delim = 0;
             }
+            token += data[i];
         }
     }
+    tokens.push_back(token);
 
-    if (startIndex != 0)
+    if (delim != 0) // didnt close the string
     {
         throw InvalidArgument();
     }
+
     return tokens;
+}
+
+bool Utilities::isDigits(const std::string& data)
+{
+    return data.find_first_not_of("0123456789") == std::string::npos;
 }

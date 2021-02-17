@@ -1,35 +1,15 @@
 #include "CommandHandler.h"
 
-std::unordered_map <std::string, Variable> CommandHandler::variables;
-
 void CommandHandler::handleCommand(const std::vector<std::string>& args)
 {
+	AssignmentOperator op = AssignmentOperator();
 	switch (CommandHandler::getCommandType(args))
 	{
 	case Command::ASSIGN:
-		if (Variable::getDataType(args[0]) == Type::NONE)
-		{
-			throw InvalidArgument();
-		}
-
-		if (CommandHandler::isVariable(args[0]))
-		{
-			variables[args[0]].setValue(args[2]);
-		}
-		else
-		{
-			variables[args[0]] = Variable(args[2]);
-		}
+		op.execute(args[0], args[2]);
 		break;
 	case Command::GET_VARIABLE:
-		if (CommandHandler::isVariable(args[0]))
-		{
-			std::cout << variables[args[0]].toString() << std::endl;
-		}
-		else
-		{
-			throw InvalidArgument();
-		}
+		std::cout << VariableHandler::getVariable(args[0]).getValue().toString() << std::endl;
 		break;
 	case Command::ERROR:
 		throw InvalidCommand();
@@ -53,9 +33,4 @@ Command CommandHandler::getCommandType(const std::vector<std::string>& args)
 		return Command::GET_VARIABLE;
 	}
 	return Command::ERROR;
-}
-
-bool CommandHandler::isVariable(const std::string& varName)
-{
-	return variables.find(varName) != variables.end();
 }

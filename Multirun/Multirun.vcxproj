@@ -139,17 +139,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AssignmentOperator.cpp" />
     <ClCompile Include="CommandHandler.cpp" />
+    <ClCompile Include="ExpressionHandler.cpp" />
+    <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="OperatorHandler.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="Value.cpp" />
     <ClCompile Include="Variable.cpp" />
+    <ClCompile Include="VariableHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssignmentOperator.h" />
     <ClInclude Include="CommandHandler.h" />
+    <ClInclude Include="ExpressionHandler.h" />
     <ClInclude Include="InvalidArgument.h" />
     <ClInclude Include="InvalidCommand.h" />
+    <ClInclude Include="Operator.h" />
+    <ClInclude Include="ExpressionType.h" />
+    <ClInclude Include="OperatorHandler.h" />
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="Value.h" />
     <ClInclude Include="Variable.h" />
+    <ClInclude Include="VariableHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

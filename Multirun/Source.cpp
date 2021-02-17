@@ -1,5 +1,4 @@
 #include "CommandHandler.h"
-#include "Utilities.h"
 
 int main()
 {
@@ -14,7 +13,7 @@ int main()
 
 		try
 		{
-			args = Utilities::spilt(command);
+			args = Utilities::spilt(command, " ", true);
 			CommandHandler::handleCommand(args);
 		}
 		catch (const std::exception& e)

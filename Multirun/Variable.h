@@ -1,33 +1,22 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 
-enum class Type
-{
-	NONE,
-	INTEGER,
-	STRING,
-	FLOAT,
-	BOOLEAN
-};
+#include "Value.h"
+#include "InvalidArgument.h"
 
 class Variable
 {
 public:
-	Variable(const std::string& data);
-	Variable();
+	Variable(const std::string& name, const std::string& data);
+	Variable(const std::string& name, const Value& value);
 
-	void getValue(void* result) const;
-	void setValue(const std::string& data);
-	std::string toString() const;
+	std::string getName() const;
+	Value getValue() const;
 
-	static Type getDataType(const std::string& data);
 private:
-	Type _type;
-
-	int _intVal;
-	std::string _stringVal;
-	float _floatVal;
-	bool _booleanVal;
+	std::string _name;
+	Value _value;
 };
 
