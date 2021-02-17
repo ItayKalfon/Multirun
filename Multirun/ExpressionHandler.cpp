@@ -20,6 +20,22 @@ ExpressionType ExpressionHandler::getType(const std::string& data)
     }
 }
 
+std::shared_ptr<IValue> ExpressionHandler::getValue(const std::string& data)
+{
+    if (ExpressionHandler::getType(data) == ExpressionType::VALUE)
+    {
+        return ValueHandler::getValue(data);
+    }
+    else if (ExpressionHandler::getType(data) == ExpressionType::VARIABLE)
+    {
+        return VariableHandler::getVariable(data).getValue();
+    }
+    else
+    {
+        return std::make_shared<None>();
+    }
+}
+
 std::shared_ptr<IValue> ExpressionHandler::compute(std::vector<std::string> args)
 {
     std::string res = executeOperators(args);
