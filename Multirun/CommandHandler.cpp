@@ -3,10 +3,10 @@
 void CommandHandler::handleCommand(const std::vector<std::string>& args)
 {
 	//AssignmentOperator op = AssignmentOperator();
-	Value res = ExpressionHandler::compute(args);
-	if (res.getType() != ValueType::NONE)
+	std::shared_ptr<IValue> res = ExpressionHandler::compute(args);
+	if (res->getType() != ValueType::NONE)
 	{
-		std::cout << res.toString() << std::endl;
+		std::cout << Utilities::toString(res) << std::endl;
 	}
 	/*
 	switch (CommandHandler::getCommandType(args))

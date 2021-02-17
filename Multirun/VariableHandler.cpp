@@ -1,6 +1,6 @@
 #include "VariableHandler.h"
 
-std::unordered_map<std::string, Value> VariableHandler::_variables;
+std::unordered_map<std::string, std::shared_ptr<IValue>> VariableHandler::_variables;
 
 bool VariableHandler::isValidVariableName(const std::string& name)
 {
@@ -38,10 +38,10 @@ Variable VariableHandler::getVariable(const std::string& name)
 
 void VariableHandler::setVariable(const std::string& name, const std::string& data)
 {
-	VariableHandler::setVariable(name, Value(data));
+	VariableHandler::setVariable(name, ValueHandler::getValue(data));
 }
 
-void VariableHandler::setVariable(const std::string& name, const Value& value)
+void VariableHandler::setVariable(const std::string& name, const std::shared_ptr<IValue>& value)
 {
 	if (VariableHandler::isValidVariableName(name))
 	{

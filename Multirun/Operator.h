@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Value.h"
+#include "None.h"
 
 enum class Priority
 {
@@ -23,7 +23,7 @@ public:
 	std::string getSymbol() const;
 	Priority getPriority() const;
 	Shape getShape() const;
-	virtual Value execute(const std::string& left, const std::string& right) const = 0;
+	virtual std::shared_ptr<IValue> execute(const std::string& left, const std::string& right) const = 0;
 
 protected:
 	std::string _symbol;

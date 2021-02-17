@@ -7,7 +7,7 @@ AssignmentOperator::AssignmentOperator()
 	this->_shape = Shape::BOTH;
 }
 
-Value AssignmentOperator::execute(const std::string& left, const std::string& right) const
+std::shared_ptr<IValue> AssignmentOperator::execute(const std::string& left, const std::string& right) const
 {
 	if (ExpressionHandler::getType(left) == ExpressionType::VARIABLE && ExpressionHandler::getType(right) == ExpressionType::VALUE)
 	{
@@ -21,5 +21,5 @@ Value AssignmentOperator::execute(const std::string& left, const std::string& ri
 	{
 		throw InvalidArgument();
 	}
-	return Value();
+	return std::make_shared<None>();
 }

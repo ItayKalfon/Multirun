@@ -3,20 +3,21 @@
 #include <string>
 #include <unordered_map>
 
-#include "Value.h"
 #include "InvalidArgument.h"
+#include "ValueHandler.h"
+#include "IValue.h"
 
 class Variable
 {
 public:
 	Variable(const std::string& name, const std::string& data);
-	Variable(const std::string& name, const Value& value);
+	Variable(const std::string& name, const std::shared_ptr<IValue>& value);
 
 	std::string getName() const;
-	Value getValue() const;
+	std::shared_ptr<IValue> getValue() const;
 
 private:
 	std::string _name;
-	Value _value;
+	std::shared_ptr<IValue> _value;
 };
 

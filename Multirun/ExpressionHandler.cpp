@@ -2,7 +2,7 @@
 
 ExpressionType ExpressionHandler::getType(const std::string& data)
 {
-    if (Value::isValue(data))
+    if (ValueHandler::isValue(data))
     {
         return ExpressionType::VALUE;
     }
@@ -20,17 +20,17 @@ ExpressionType ExpressionHandler::getType(const std::string& data)
     }
 }
 
-Value ExpressionHandler::compute(std::vector<std::string> args)
+std::shared_ptr<IValue> ExpressionHandler::compute(std::vector<std::string> args)
 {
     std::string res = executeOperators(args);
     switch (getType(res))
     {
     case ExpressionType::VALUE:
-        return Value(res);
+        return ValueHandler::getValue(res);
     case ExpressionType::VARIABLE:
         return VariableHandler::getVariable(res).getValue();
     default:
-        return Value();
+        return std::make_unique<None>();
     }
 }
 
@@ -50,7 +50,7 @@ std::string ExpressionHandler::executeOperators(std::vector<std::string> args)
                 case Shape::BOTH:
                     if (place != args.begin() && place != args.end() - 1)
                     {
-                        *place = op->execute(*(place - 1), *(place + 1)).toString();
+                        *place = Utilities::toString(op->execute(*(place - 1), *(place + 1)));
                         place -= 1;
                         args.erase(place + 2);
                         args.erase(place);

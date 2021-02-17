@@ -34,6 +34,12 @@
     <Filter Include="Source Files\Expressions">
       <UniqueIdentifier>{6a6332ad-154c-4c8f-b85b-fddd6000d371}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Values">
+      <UniqueIdentifier>{56ecf7e3-26d7-4c12-9cf8-ae0533606e46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Values">
+      <UniqueIdentifier>{648d173c-9a47-4d31-ba65-0ed93183947a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -47,9 +53,6 @@
     </ClCompile>
     <ClCompile Include="ExpressionHandler.cpp">
       <Filter>Source Files\Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="Value.cpp">
-      <Filter>Source Files\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="Variable.cpp">
       <Filter>Source Files\Expressions</Filter>
@@ -66,8 +69,29 @@
     <ClCompile Include="Operator.cpp">
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
+    <ClCompile Include="Integer.cpp">
+      <Filter>Source Files\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="Boolean.cpp">
+      <Filter>Source Files\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="Float.cpp">
+      <Filter>Source Files\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="String.cpp">
+      <Filter>Source Files\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="IValue.cpp">
+      <Filter>Source Files\Values</Filter>
+    </ClCompile>
     <ClCompile Include="PlusOperator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="ValueHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="None.cpp">
+      <Filter>Source Files\Values</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,9 +113,6 @@
     <ClInclude Include="Operator.h">
       <Filter>Header Files\Operators</Filter>
     </ClInclude>
-    <ClInclude Include="Value.h">
-      <Filter>Expressions</Filter>
-    </ClInclude>
     <ClInclude Include="Variable.h">
       <Filter>Expressions</Filter>
     </ClInclude>
@@ -112,6 +133,30 @@
     </ClInclude>
     <ClInclude Include="InvalidCast.h">
       <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="IValue.h">
+      <Filter>Header Files\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="Integer.h">
+      <Filter>Header Files\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="ValueType.h">
+      <Filter>Header Files\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="Boolean.h">
+      <Filter>Header Files\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="Float.h">
+      <Filter>Header Files\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="String.h">
+      <Filter>Header Files\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="ValueHandler.h">
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="None.h">
+      <Filter>Header Files\Values</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

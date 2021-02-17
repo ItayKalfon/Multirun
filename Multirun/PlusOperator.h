@@ -9,5 +9,5 @@ class PlusOperator : public Operator
 public:
 	PlusOperator();
 
-	virtual Value execute(const std::string& left, const std::string& right) const;
+	virtual std::shared_ptr<IValue> execute(const std::string& left, const std::string& right) const;
 };

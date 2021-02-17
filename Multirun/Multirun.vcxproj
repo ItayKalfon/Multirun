@@ -140,30 +140,43 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AssignmentOperator.cpp" />
+    <ClCompile Include="Boolean.cpp" />
     <ClCompile Include="CommandHandler.cpp" />
     <ClCompile Include="ExpressionHandler.cpp" />
+    <ClCompile Include="Float.cpp" />
+    <ClCompile Include="Integer.cpp" />
+    <ClCompile Include="IValue.cpp" />
+    <ClCompile Include="None.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="OperatorHandler.cpp" />
     <ClCompile Include="PlusOperator.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="String.cpp" />
     <ClCompile Include="Utilities.cpp" />
-    <ClCompile Include="Value.cpp" />
+    <ClCompile Include="ValueHandler.cpp" />
     <ClCompile Include="Variable.cpp" />
     <ClCompile Include="VariableHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentOperator.h" />
+    <ClInclude Include="Boolean.h" />
     <ClInclude Include="CommandHandler.h" />
     <ClInclude Include="ExpressionHandler.h" />
+    <ClInclude Include="Float.h" />
+    <ClInclude Include="Integer.h" />
     <ClInclude Include="InvalidArgument.h" />
     <ClInclude Include="InvalidCast.h" />
     <ClInclude Include="InvalidCommand.h" />
+    <ClInclude Include="IValue.h" />
+    <ClInclude Include="None.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="ExpressionType.h" />
     <ClInclude Include="OperatorHandler.h" />
     <ClInclude Include="PlusOperator.h" />
+    <ClInclude Include="String.h" />
     <ClInclude Include="Utilities.h" />
-    <ClInclude Include="Value.h" />
+    <ClInclude Include="ValueHandler.h" />
+    <ClInclude Include="ValueType.h" />
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableHandler.h" />
   </ItemGroup>

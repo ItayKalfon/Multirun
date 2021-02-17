@@ -8,6 +8,6 @@ class AssignmentOperator : public Operator
 public:
 	AssignmentOperator();
 
-	virtual Value execute(const std::string& left, const std::string& right) const;
+	virtual std::shared_ptr<IValue> execute(const std::string& left, const std::string& right) const;
 };
 
