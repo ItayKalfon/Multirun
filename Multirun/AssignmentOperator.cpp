@@ -21,5 +21,5 @@ std::shared_ptr<IValue> AssignmentOperator::execute(const std::string& left, con
 	{
 		throw InvalidArgument();
 	}
-	return std::make_shared<None>();
+	return ValueHandler::createValue();
 }

@@ -17,6 +17,7 @@ public:
 	static std::shared_ptr<IValue> createValue(const int data);
 	static std::shared_ptr<IValue> createValue(const std::string& data);
 	static std::shared_ptr<IValue> createValue(const bool data);
+	static std::shared_ptr<IValue> createValue();
 	static ValueType getType(const std::string& data);
 	static bool isValue(const std::string& data);
 	static std::shared_ptr<IValue> castTo(const std::shared_ptr<IValue>& value, const ValueType type);

@@ -5,15 +5,15 @@ std::shared_ptr<IValue> ValueHandler::getValue(const std::string& data)
     switch (ValueHandler::getType(data))
     {
     case ValueType::BOOLEAN:
-        return std::make_shared<Boolean>(data == "true");
+        return ValueHandler::createValue(data == "true");
     case ValueType::FLOAT:
-        return std::make_shared<Float>(std::stof(data));
+        return ValueHandler::createValue(std::stof(data));
     case ValueType::INTEGER:
-        return std::make_shared<Integer>(std::stoi(data));
+        return ValueHandler::createValue(std::stoi(data));
     case ValueType::STRING:
-        return std::make_shared<String>(data.substr(1, data.size() - 2));
+        return ValueHandler::createValue(data.substr(1, data.size() - 2));
     default:
-        return std::make_shared<None>();
+        return ValueHandler::createValue();
     }
 }
 
@@ -37,6 +37,11 @@ std::shared_ptr<IValue> ValueHandler::createValue(const bool data)
     return std::make_shared<Boolean>(data);
 }
 
+std::shared_ptr<IValue> ValueHandler::createValue()
+{
+    return std::make_shared<None>();
+}
+
 ValueType ValueHandler::getType(const std::string& data)
 {
     if (data.size() == 0)
@@ -52,19 +57,26 @@ ValueType ValueHandler::getType(const std::string& data)
     {
         return ValueType::STRING;
     }
-    try
+    else if (std::count(data.begin(), data.end(), '.') <= 1)
     {
-        float num = std::stof(data);
-        if (static_cast<float>(static_cast<int>(num)) == num) // Check if float is int
+        try
         {
-            return ValueType::INTEGER;
+            float num = std::stof(data);
+            if (data.find('.') == std::string::npos) // Check if float is int
+            {
+                return ValueType::INTEGER;
+            }
+            else
+            {
+                return ValueType::FLOAT;
+            }
         }
-        else
+        catch (const std::logic_error&)
         {
-            return ValueType::FLOAT;
+            return ValueType::NONE;
         }
     }
-    catch (const std::logic_error&)
+    else
     {
         return ValueType::NONE;
     }
@@ -88,6 +100,6 @@ std::shared_ptr<IValue> ValueHandler::castTo(const std::shared_ptr<IValue>& valu
     case ValueType::STRING:
         return ValueHandler::createValue(value->toString());
     default:
-        return std::make_unique<None>();
+        throw InvalidCast(value->getType(), type);
     }
 }

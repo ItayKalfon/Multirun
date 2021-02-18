@@ -146,6 +146,7 @@
     <ClCompile Include="Float.cpp" />
     <ClCompile Include="Integer.cpp" />
     <ClCompile Include="IValue.cpp" />
+    <ClCompile Include="MinusOperator.cpp" />
     <ClCompile Include="None.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="OperatorHandler.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="InvalidCast.h" />
     <ClInclude Include="InvalidCommand.h" />
     <ClInclude Include="IValue.h" />
+    <ClInclude Include="MinusOperator.h" />
     <ClInclude Include="None.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="ExpressionType.h" />

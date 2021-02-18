@@ -11,23 +11,20 @@ std::shared_ptr<IValue> PlusOperator::execute(const std::string& left, const std
 {
 	auto leftVal = ExpressionHandler::getValue(left);
 	auto rightVal = ExpressionHandler::getValue(right);
-
-	if (leftVal->getType() == ValueType::NONE || rightVal->getType() == ValueType::NONE)
-	{
-		throw InvalidArgument();
-	}
 	
 	switch (leftVal->getType())
 	{
 	case ValueType::BOOLEAN:
 		return ValueHandler::createValue(leftVal->toBoolean() + rightVal->toBoolean());
 	case ValueType::FLOAT:
-		return ValueHandler::createValue(rightVal->toFloat() + rightVal->toFloat());
+		return ValueHandler::createValue(leftVal->toFloat() + rightVal->toFloat());
 	case ValueType::INTEGER:
 		return ValueHandler::createValue(leftVal->toInt() + rightVal->toInt());
 	case ValueType::STRING:
 		return ValueHandler::createValue(leftVal->toString() + rightVal->toString());
+	case ValueType::NONE:
+		throw InvalidArgument();
 	default:
-		return std::make_shared<None>();
+		return ValueHandler::createValue();
 	}
 }

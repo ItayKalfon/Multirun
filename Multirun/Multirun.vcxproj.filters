@@ -93,6 +93,9 @@
     <ClCompile Include="None.cpp">
       <Filter>Source Files\Values</Filter>
     </ClCompile>
+    <ClCompile Include="MinusOperator.cpp">
+      <Filter>Source Files\Operators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InvalidCommand.h">
@@ -157,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="None.h">
       <Filter>Header Files\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="MinusOperator.h">
+      <Filter>Header Files\Operators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

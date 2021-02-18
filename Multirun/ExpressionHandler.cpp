@@ -32,7 +32,7 @@ std::shared_ptr<IValue> ExpressionHandler::getValue(const std::string& data)
     }
     else
     {
-        return std::make_shared<None>();
+        return ValueHandler::createValue();
     }
 }
 
@@ -46,7 +46,7 @@ std::shared_ptr<IValue> ExpressionHandler::compute(std::vector<std::string> args
     case ExpressionType::VARIABLE:
         return VariableHandler::getVariable(res).getValue();
     default:
-        return std::make_unique<None>();
+        return ValueHandler::createValue();
     }
 }
 
