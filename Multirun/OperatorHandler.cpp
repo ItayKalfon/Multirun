@@ -4,7 +4,8 @@ const std::vector<std::shared_ptr<Operator>> OperatorHandler::_operators = [] {
 	std::vector<std::shared_ptr<Operator>> operators = std::vector<std::shared_ptr<Operator>> {
 		static_cast<std::shared_ptr<Operator>>(std::make_shared<AssignmentOperator>()),
 		static_cast<std::shared_ptr<Operator>>(std::make_shared<PlusOperator>()),
-		static_cast<std::shared_ptr<Operator>>(std::make_shared<MinusOperator>())
+		static_cast<std::shared_ptr<Operator>>(std::make_shared<MinusOperator>()),
+		static_cast<std::shared_ptr<Operator>>(std::make_shared<PlusEqualOperator>())
 	};
 	std::sort(operators.begin(), operators.end(), [] (std::shared_ptr<Operator> first, std::shared_ptr<Operator> second) { return first->getPriority() > second->getPriority(); }); // Sort by priority
 	return operators;

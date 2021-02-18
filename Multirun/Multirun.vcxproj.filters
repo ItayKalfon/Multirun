@@ -96,6 +96,9 @@
     <ClCompile Include="MinusOperator.cpp">
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
+    <ClCompile Include="PlusEqualOperator.cpp">
+      <Filter>Source Files\Operators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InvalidCommand.h">
@@ -162,6 +165,9 @@
       <Filter>Header Files\Values</Filter>
     </ClInclude>
     <ClInclude Include="MinusOperator.h">
+      <Filter>Header Files\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="PlusEqualOperator.h">
       <Filter>Header Files\Operators</Filter>
     </ClInclude>
   </ItemGroup>

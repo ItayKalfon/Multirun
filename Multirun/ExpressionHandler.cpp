@@ -52,24 +52,21 @@ std::shared_ptr<IValue> ExpressionHandler::compute(std::vector<std::string> args
 
 std::string ExpressionHandler::executeOperators(std::vector<std::string> args)
 {
-    std::vector<std::string>::iterator place;
-    bool isNotFound;
-    for (std::shared_ptr<Operator> op : OperatorHandler::getOperators())
+    for (Priority priority = Priority::HIGH; priority != Priority::NO_PRIORITY; priority = static_cast<Priority>(static_cast<int>(priority) - 1))
     {
-        do
+        for (int i = 0; i < args.size(); i++)
         {
-            place = std::find(args.begin(), args.end(), op->getSymbol());
-            if (isNotFound = place != args.end())
+            if (ExpressionHandler::getType(args[i]) == ExpressionType::OPERATOR && OperatorHandler::getOperator(args[i])->getPriority() == priority)
             {
-                switch (op->getShape())
+                switch (OperatorHandler::getOperator(args[i])->getShape())
                 {
                 case Shape::BOTH:
-                    if (place != args.begin() && place != args.end() - 1)
+                    if (i != 0 && i != args.size() - 1)
                     {
-                        *place = Utilities::toString(op->execute(*(place - 1), *(place + 1)));
-                        place -= 1;
-                        args.erase(place + 2);
-                        args.erase(place);
+                        args[i] = Utilities::toString(OperatorHandler::getOperator(args[i])->execute(args[i - 1], args[i + 1]));
+                        i -= 1;
+                        args.erase(args.begin() + i + 2);
+                        args.erase(args.begin() + i);
                     }
                     else
                     {
@@ -80,7 +77,7 @@ std::string ExpressionHandler::executeOperators(std::vector<std::string> args)
                     break;
                 }
             }
-        } while (isNotFound);
+        }
     }
     if (args.size() != 1)
     {

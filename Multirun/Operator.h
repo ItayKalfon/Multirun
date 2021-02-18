@@ -6,8 +6,9 @@
 
 enum class Priority
 {
-	LOW,
-	HIGH
+	NO_PRIORITY = 0,
+	LOW = 1,
+	HIGH = 2
 };
 
 enum class Shape

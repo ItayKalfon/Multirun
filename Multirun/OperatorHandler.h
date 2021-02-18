@@ -7,6 +7,9 @@
 #include "AssignmentOperator.h"
 #include "PlusOperator.h"
 #include "MinusOperator.h"
+#include "PlusEqualOperator.h"
+
+class PlusEqualOperator;
 
 class OperatorHandler
 {

@@ -150,6 +150,7 @@
     <ClCompile Include="None.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="OperatorHandler.cpp" />
+    <ClCompile Include="PlusEqualOperator.cpp" />
     <ClCompile Include="PlusOperator.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="String.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Operator.h" />
     <ClInclude Include="ExpressionType.h" />
     <ClInclude Include="OperatorHandler.h" />
+    <ClInclude Include="PlusEqualOperator.h" />
     <ClInclude Include="PlusOperator.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Utilities.h" />
