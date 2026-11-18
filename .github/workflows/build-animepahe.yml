@@ -1,0 +1,100 @@
+name: Build AnimePahe 16.56
+
+on:
+  push:
+    branches: [ccr-dd90ba62-kfurdy]
+    paths: [.github/workflows/build-animepahe.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      UPSTREAM_SHA: 1e69f275abd6fc61356c501faa0483771c177ef7
+      APK_NAME: aniyomi-en.animepahe-v16.56.apk
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v4
+        with:
+          path: self
+
+      - name: Checkout yuzono/anime-extensions at target commit
+        uses: actions/checkout@v4
+        with:
+          repository: yuzono/anime-extensions
+          ref: ${{ env.UPSTREAM_SHA }}
+          path: ext
+
+      - name: Verify source is AnimePahe 16.56
+        working-directory: ext
+        run: |
+          test "$(git rev-parse HEAD)" = "$UPSTREAM_SHA"
+          cat src/en/animepahe/build.gradle.kts
+          grep -q 'name = "AnimePahe"' src/en/animepahe/build.gradle.kts
+          grep -q 'versionCode = 56' src/en/animepahe/build.gradle.kts
+          grep -q 'libVersion = "16"' src/en/animepahe/build.gradle.kts
+          ! grep -q 'theme' src/en/animepahe/build.gradle.kts
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Restrict Gradle settings to AnimePahe only (build-config only change)
+        working-directory: ext
+        run: |
+          sed -i 's/^loadAllIndividualExtensions()$/loadIndividualExtension("en", "animepahe")/' settings.gradle.kts
+          git diff
+
+      - name: Create dedicated signing key
+        working-directory: ext
+        run: |
+          keytool -genkeypair -v -keystore signingkey.jks -storetype PKCS12 \
+            -alias animepahe -keyalg RSA -keysize 4096 -validity 36500 \
+            -storepass "$KS_PASS" -keypass "$KS_PASS" \
+            -dname "CN=AnimePahe local build"
+        env:
+          KS_PASS: animepahe-local-build
+
+      - name: Build release APK
+        working-directory: ext
+        env:
+          KEY_STORE_PASSWORD: animepahe-local-build
+          KEY_PASSWORD: animepahe-local-build
+          ALIAS: animepahe
+        run: ./gradlew --no-daemon --stacktrace :src:en:animepahe:assembleRelease
+
+      - name: Verify APK
+        working-directory: ext
+        run: |
+          set -x
+          find src/en/animepahe/build/outputs -name '*.apk'
+          APK=$(find src/en/animepahe/build/outputs/apk/release -name '*.apk' | head -1)
+          mkdir -p ../out && cp "$APK" "../out/$APK_NAME"
+          BT=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -1)
+          cd ../out
+          "$BT/aapt2" dump badging "$APK_NAME" | tee badging.txt
+          "$BT/apksigner" verify --verbose --print-certs "$APK_NAME" | tee signature.txt
+          unzip -tq "$APK_NAME" | tee integrity.txt
+          grep -q "package: name='eu.kanade.tachiyomi.animeextension.en.animepahe' versionCode='56' versionName='16.56'" badging.txt
+          sha256sum "$APK_NAME" | tee "$APK_NAME.sha256"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aniyomi-en.animepahe-v16.56
+          path: out/
+
+      - name: Commit APK back to branch for retrieval
+        working-directory: self
+        run: |
+          mkdir -p out && cp ../out/* out/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add out
+          git commit -m "Add built AnimePahe 16.56 APK [skip ci]"
+          git push
