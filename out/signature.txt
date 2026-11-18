@@ -1,0 +1,18 @@
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): false
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v3.2 scheme (APK Signature Scheme v3.2): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+V2 Signer: certificate DN: CN=AnimePahe local build
+V2 Signer: certificate SHA-256 digest: 81ed1bcefafe28e8d7d4aabd793a5c5a13fdc368f9e65de4ee41179c82f13aa7
+V2 Signer: certificate SHA-1 digest: b2d9898490e3e623f8aabfdeb4a97bce517edce8
+V2 Signer: certificate MD5 digest: b8ea27cef837cc667c880849a581071b
+V2 Signer: key algorithm: RSA
+V2 Signer: key size (bits): 4096
+V2 Signer: public key SHA-256 digest: 265e55ae6b5e2a4fd721b4f097c0a9526c85cfab4e13c7ec7f3a001911463ffc
+V2 Signer: public key SHA-1 digest: 8316d43bc01dbdd5e8aacdc4f28488238f137891
+V2 Signer: public key MD5 digest: dd867d6bd7af66efdecec37b79a410f1
